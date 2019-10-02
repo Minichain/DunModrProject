@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class NeuralNetworkLayer {
     private double[][] weights;
     private double[] biases;
@@ -40,9 +42,10 @@ public class NeuralNetworkLayer {
 
     private void initializeWeights() {
         weights = new double[numberOfNeurons][numberOfInputs];
+        Random random = new Random();
         for (int i = 0; i < numberOfNeurons; i++) {
             for (int j = 0; j < numberOfInputs; j++) {
-                weights[i][j] = Math.random() / (numberOfNeurons * numberOfInputs);
+                weights[i][j] = random.nextGaussian() * Math.sqrt(1.0 / numberOfInputs);
             }
         }
 //        Log.l("NeuralNetworkLog:: initializeWeights of size: (" + numberOfInputs + ", " + numberOfNeurons + ")");
@@ -51,8 +54,7 @@ public class NeuralNetworkLayer {
     private void initializeBiases() {
         biases = new double[numberOfNeurons];
         for (int i = 0; i < numberOfNeurons; i++) {
-            biases[i] = Math.random() / biases.length;
-//            biases[i] = 1;
+            biases[i] = 0;
         }
 //        Log.l("NeuralNetworkLog:: initializeBiases of size: (" + numberOfNeurons + ", " + 1 + ")");
     }
@@ -62,7 +64,6 @@ public class NeuralNetworkLayer {
     }
 
     public void setNeuronValues(double[] values) {
-//        Log.l("set inputValues:\n " + Utils.toString(values));
         neuronValues = values;
     }
 

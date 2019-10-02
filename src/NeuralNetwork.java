@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 
 public class NeuralNetwork {
-    private static int numberOfHiddenLayers = 3;
-    private static int numberOfNeuronsPerHiddenLayer = 100;
+    private static int numberOfHiddenLayers = 4;
+    private static int numberOfNeuronsPerHiddenLayer = 300;
+    private static double learningFactor = 0.01;
     private static int numberOfOutputs = 10;
     private static double[] inputs;
     private static double[] outputs;
     private static boolean initialized = false;
     private static ArrayList<NeuralNetworkLayer> listOfNeuralNetworkLayers = new ArrayList<>();
-    private static double learningFactor = 0.01;
 
     public NeuralNetwork(int numberOfInputs) {
         initNeuralNetwork(numberOfInputs);
@@ -132,7 +132,7 @@ public class NeuralNetwork {
     }
 
     private double computeDeltaE_deltaNeuronValue(int i, int j, double[] currentNetworkLayerValues) {
-        return listOfNeuralNetworkLayers.get(i).getError()[j] * (currentNetworkLayerValues[j] * (1 - currentNetworkLayerValues[j]));
+        return listOfNeuralNetworkLayers.get(i).getError()[j] * Utils.sigmoidDerivative(currentNetworkLayerValues[j]);
     }
 
     private void computeLayerError(double[] targetValues, int layer) {
