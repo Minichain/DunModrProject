@@ -52,6 +52,10 @@ public class Utils {
         return (1 / (1 + Math.exp(-x)));
     }
 
+    public static double sigmoidDerivative(double x) {
+        return (x * (1 - x));
+    }
+
     public static double tanh(double x) {
         return (2 / (1 + Math.exp(-2 * x))) - 1;
     }
@@ -59,6 +63,14 @@ public class Utils {
     public static double ReLU(double x) {
         if (x > 0) {
             return x;
+        } else {
+            return 0;
+        }
+    }
+
+    public static double ReLUDerivative(double x) {
+        if (x > 0) {
+            return 1;
         } else {
             return 0;
         }
