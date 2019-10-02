@@ -1,0 +1,26 @@
+//-----------------------------TEST 1------------------------------------
+
+private static int numberOfHiddenLayers = 3;
+private static int numberOfNeuronsPerHiddenLayer = 100;
+private static double learningFactor = 0.01;
+
+NeuralNetworkLog:: Number of training iterations: 70423
+NeuralNetworkLog:: Elapsed time: 599603 ms
+
+//-----------------------------TEST 2------------------------------------
+
+private static int numberOfHiddenLayers = 4;
+private static int numberOfNeuronsPerHiddenLayer = 300;
+private static double learningFactor = 0.01;
+
+NeuralNetworkLog:: Number of training iterations: 1268
+NeuralNetworkLog:: Elapsed time: 46374 ms
+
+//-----------------------------TEST N------------------------------------
+
+private static int numberOfHiddenLayers = ;
+private static int numberOfNeuronsPerHiddenLayer = ;
+private static double learningFactor = ;
+
+NeuralNetworkLog:: Number of training iterations:
+NeuralNetworkLog:: Elapsed time:  ms
