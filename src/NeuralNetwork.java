@@ -32,7 +32,7 @@ public class NeuralNetwork {
         initialized = true;
     }
 
-    public void predictValue(double[] inputValues) {
+    public int predictValue(double[] inputValues) {
 //        Log.l("NeuralNetworkLog:: PredictValue. Number of inputs: " + inputValues.length);
 //        for (int i = 0; i < inputValues.length; i++) {
 //            Log.l("NeuralNetworkLog:: Input[" + i + "]: " + inputValues[i]);
@@ -47,7 +47,7 @@ public class NeuralNetwork {
         }
         NeuralNetworkLayer lastLayer = listOfNeuralNetworkLayers.get(listOfNeuralNetworkLayers.size() - 1);
         outputs = lastLayer.getNeuronValues();
-        Log.l("NeuralNetworkLog:: Predicted value is " + lastLayer.getNeuronWithMaxValue());
+        return lastLayer.getNeuronWithMaxValue();
     }
 
     public double[] getOutputs() {
@@ -63,7 +63,8 @@ public class NeuralNetwork {
         ArrayList<TrainingElement> trainingElements = TrainingData.getInstance().getTrainingElements();
         double[] vectorOfErrors = new double[trainingElements.size()];
         for (int i = 0; i < trainingElements.size(); i++) {
-            predictValue(Utils.bufferedImageToArrayOfPixels(trainingElements.get(i).getImage()));
+            int predictedValue = predictValue(Utils.bufferedImageToArrayOfPixels(trainingElements.get(i).getImage()));
+            Log.l("NeuralNetworkLog:: Predicted value is " + predictedValue);
             double[] resultValues = getOutputs();
             double[] targetValues = new double[numberOfOutputs];
 
