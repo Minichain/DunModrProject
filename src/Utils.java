@@ -48,42 +48,6 @@ public class Utils {
         return ret;
     }
 
-    public static double sigmoid(double x) {
-        return (1 / (1 + Math.exp(-x)));
-    }
-
-    public static double sigmoidDerivative(double x) {
-        return (x * (1 - x));
-    }
-
-    public static double tanh(double x) {
-        return (2 / (1 + Math.exp(-2 * x))) - 1;
-    }
-
-    public static double ReLU(double x) {
-        if (x > 0) {
-            return x;
-        } else {
-            return 0;
-        }
-    }
-
-    public static double ReLUDerivative(double x) {
-        if (x > 0) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-    public static double leakyReLU(double x) {
-        if (x > 0) {
-            return x;
-        } else {
-            return 0.01 * x;
-        }
-    }
-
     public static double[] multiplyMatrices(double[][] m1, double[] m2) {
         int m1ColLength = m1[0].length; // m1 columns length
         int m2RowLength = m2.length;    // m2 rows length

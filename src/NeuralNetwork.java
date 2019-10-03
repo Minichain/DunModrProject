@@ -33,10 +33,6 @@ public class NeuralNetwork {
     }
 
     public int predictValue(double[] inputValues) {
-//        Log.l("NeuralNetworkLog:: PredictValue. Number of inputs: " + inputValues.length);
-//        for (int i = 0; i < inputValues.length; i++) {
-//            Log.l("NeuralNetworkLog:: Input[" + i + "]: " + inputValues[i]);
-//        }
         inputs = inputValues;
         for (int i = 0; i < listOfNeuralNetworkLayers.size(); i++) {
             if (i == 0) {   // First layer
@@ -77,11 +73,7 @@ public class NeuralNetwork {
                 }
             }
 
-//            for (int k = 0; k < resultValues.length; k++) {
-//                Log.l("NeuralNetworkLog:: resultValues[" + k + "]: " + resultValues[k]);
-//            }
-
-            Log.l("NeuralNetworkLog:: targetValue: " + trainingElements.get(i).getValue());
+            Log.l("NeuralNetworkLog:: Target value is: " + trainingElements.get(i).getValue());
 
             computeNewWeights(targetValues);
             vectorOfErrors[i] = Utils.euclideanDistance(listOfNeuralNetworkLayers.get(listOfNeuralNetworkLayers.size() - 1).getError());
@@ -110,14 +102,6 @@ public class NeuralNetwork {
             double[][] weights = currentNetworkLayer.getWeights();
             double[] biases = currentNetworkLayer.getBiases();
 
-//            Log.l("Layer " + i + " Errors:\n" + Utils.toString(currentNetworkLayer.getError()));
-//            Log.l("Layer " + i + " Weights:\n" + Utils.toString(currentNetworkLayer.getWeights()));
-//            Log.l("Layer " + i + " Bias:\n" + Utils.toString(currentNetworkLayer.getBiases()));
-
-//            Log.l("NeuralNetworkLog:: computeNewWeights:: computeNewWeights size " + weights.length + ", " + weights[0].length);
-//            Log.l("NeuralNetworkLog:: computeNewWeights:: currentNetworkLayerValues size " + currentNetworkLayerValues.length);
-//            Log.l("NeuralNetworkLog:: computeNewWeights:: prevNetworkLayerValues size " + prevNetworkLayerValues.length);
-
             double deltaE_deltaNeuronValue;
             for (int j = 0; j < weights.length; j++) {
                 deltaE_deltaNeuronValue = computeDeltaE_deltaNeuronValue(i, j, currentNetworkLayerValues);
@@ -133,7 +117,7 @@ public class NeuralNetwork {
     }
 
     private double computeDeltaE_deltaNeuronValue(int i, int j, double[] currentNetworkLayerValues) {
-        return listOfNeuralNetworkLayers.get(i).getError()[j] * Utils.sigmoidDerivative(currentNetworkLayerValues[j]);
+        return listOfNeuralNetworkLayers.get(i).getError()[j] * ActivationFunctionUtils.activationFunctionDerivative(currentNetworkLayerValues[j]);
     }
 
     private void computeLayerError(double[] targetValues, int layer) {

@@ -19,24 +19,17 @@ public class NeuralNetworkLayer {
     }
 
     public void predictValue(double[] inputValues) {
-//        Log.l("NeuralNetworkLog:: inputValues of size: (" + inputValues.length + ", " + 1 + ")");
         neuronValues = new double[numberOfNeurons];
         double[] matrixProduct = Utils.multiplyMatrices(weights, inputValues);
         if (matrixProduct != null) {
-//            Log.l("NeuralNetworkLog:: matrixProduct of size: (" + matrixProduct.length + ", " + 1 + ")");
             maxValue = 0.0;
-//            Log.l("inputValues:\n " + Utils.toString(inputValues));
-//            Log.l("matrixProduct:\n " + Utils.toString(matrixProduct));
-//            Log.l("biases:\n " + Utils.toString(biases));
             for (int i = 0; i < numberOfNeurons; i++) {
-                neuronValues[i] = Utils.sigmoid(matrixProduct[i] + biases[i]);
+                neuronValues[i] = ActivationFunctionUtils.activationFunction(matrixProduct[i] + biases[i]);
                 if (maxValue < neuronValues[i]) {
                     maxValue = neuronValues[i];
                     neuronWithMaxValue = i;
                 }
             }
-//            Log.l("neuronValues:\n " + Utils.toString(neuronValues));
-//            Log.l("\n\n ");
         }
     }
 
@@ -45,10 +38,13 @@ public class NeuralNetworkLayer {
         Random random = new Random();
         for (int i = 0; i < numberOfNeurons; i++) {
             for (int j = 0; j < numberOfInputs; j++) {
-                weights[i][j] = random.nextGaussian() * Math.sqrt(1.0 / numberOfInputs);
+                if (ActivationFunctionUtils.activationFunction == ActivationFunctionUtils.ActivationFunction.RELU) {
+                    weights[i][j] = random.nextGaussian() * Math.sqrt(2.0 / numberOfInputs);
+                } else {
+                    weights[i][j] = random.nextGaussian() * Math.sqrt(1.0 / numberOfInputs);
+                }
             }
         }
-//        Log.l("NeuralNetworkLog:: initializeWeights of size: (" + numberOfInputs + ", " + numberOfNeurons + ")");
     }
 
     private void initializeBiases() {
@@ -56,7 +52,6 @@ public class NeuralNetworkLayer {
         for (int i = 0; i < numberOfNeurons; i++) {
             biases[i] = 0;
         }
-//        Log.l("NeuralNetworkLog:: initializeBiases of size: (" + numberOfNeurons + ", " + 1 + ")");
     }
 
     public double[] getNeuronValues() {

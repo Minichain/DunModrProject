@@ -49,7 +49,12 @@ public class Main {
 
     private static void testNeuralNetwork(NeuralNetwork neuralNetwork) {
         try {
-            double[] testImage = Utils.bufferedImageToArrayOfPixels(ImageIO.read(new File("ExtraData/test_digit_7_01.png")));
+            double[] testImage;
+            testImage = Utils.bufferedImageToArrayOfPixels(ImageIO.read(new File("ExtraData/test_digit_0_01.png")));
+            Log.l("\nNeuralNetworkLog:: Test image value is " + neuralNetwork.predictValue(testImage));
+            testImage = Utils.bufferedImageToArrayOfPixels(ImageIO.read(new File("ExtraData/test_digit_7_01.png")));
+            Log.l("\nNeuralNetworkLog:: Test image value is " + neuralNetwork.predictValue(testImage));
+            testImage = Utils.bufferedImageToArrayOfPixels(ImageIO.read(new File("ExtraData/test_digit_8_01.png")));
             Log.l("\nNeuralNetworkLog:: Test image value is " + neuralNetwork.predictValue(testImage));
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,15 +62,20 @@ public class Main {
     }
 
     private static void loadTrainingData() {
-        try {
-            for (int i = 0; i < 10; i++) {
-                for (int j = 0; j < 2; j++) {
-                    String fileName = "ExtraData/digit_" + i + "_0" + (j + 1) + ".png";
-                    TrainingData.getInstance().storeTrainingElement(new TrainingElement(ImageIO.read(new File(fileName)), i));
+        TrainingElement trainingElement;
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 2; j++) {
+                String fileName = "ExtraData/digit_" + i + "_0" + (j + 1) + ".png";
+                trainingElement = null;
+                try {
+                    trainingElement = new TrainingElement(ImageIO.read(new File(fileName)), i);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (trainingElement != null) {
+                    TrainingData.getInstance().storeTrainingElement(trainingElement);
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }
