@@ -1,3 +1,6 @@
+*iml
+
 .idea/
-ExtraData/MoreData/
 out/
+ExtraData/MoreData/
+.gitignore

@@ -1,20 +1,26 @@
 import java.util.ArrayList;
 
 public class NeuralNetwork {
-    private static int numberOfHiddenLayers = 4;
-    private static int numberOfNeuronsPerHiddenLayer = 300;
-    private static double learningFactor = 0.01;
-    private static int numberOfOutputs = 10;
-    private static double[] inputs;
-    private static double[] outputs;
-    private static boolean initialized = false;
-    private static ArrayList<NeuralNetworkLayer> listOfNeuralNetworkLayers = new ArrayList<>();
+    private int numberOfInputs;
+    private int numberOfHiddenLayers;
+    private int numberOfNeuronsPerHiddenLayer;
+    private double learningFactor;
+    private int numberOfOutputs;
+    private double[] inputs;
+    private double[] outputs;
+    private boolean initialized = false;
+    private ArrayList<NeuralNetworkLayer> listOfNeuralNetworkLayers = new ArrayList<>();
 
-    public NeuralNetwork(int numberOfInputs) {
-        initNeuralNetwork(numberOfInputs);
+    public NeuralNetwork(int numberOfInputs, int numberOfHiddenLayers, int numberOfNeuronsPerHiddenLayer, double learningFactor, int numberOfOutputs) {
+        this.numberOfInputs = numberOfInputs;
+        this.numberOfHiddenLayers = numberOfHiddenLayers;
+        this.numberOfNeuronsPerHiddenLayer = numberOfNeuronsPerHiddenLayer;
+        this.learningFactor = learningFactor;
+        this.numberOfOutputs = numberOfOutputs;
+        initNeuralNetwork();
     }
 
-    private void initNeuralNetwork(int numberOfInputs) {
+    private void initNeuralNetwork() {
         NeuralNetworkLayer neuralNetworkLayer;
         if (listOfNeuralNetworkLayers.isEmpty()) {
             neuralNetworkLayer = new NeuralNetworkLayer(0, numberOfInputs);
@@ -135,15 +141,15 @@ public class NeuralNetwork {
         currentLayer.setError(errorVector);
     }
 
-    public static int getNumberOfNeuronsPerHiddenLayer() {
+    public int getNumberOfNeuronsPerHiddenLayer() {
         return numberOfNeuronsPerHiddenLayer;
     }
 
-    public static int getNumberOfHiddenLayers() {
+    public int getNumberOfHiddenLayers() {
         return numberOfHiddenLayers;
     }
 
-    public static int getNumberOfOutputs() {
+    public int getNumberOfOutputs() {
         return numberOfOutputs;
     }
 }
