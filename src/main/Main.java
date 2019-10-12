@@ -1,3 +1,5 @@
+package main;
+
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
@@ -6,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // Load training data into TrainingData class
+        // Load training data into main.TrainingData class
         loadTrainingData();
 
         long timeElapsed;
@@ -21,6 +23,8 @@ public class Main {
 
         NeuralNetwork neuralNetwork;
 
+        ApplicationStatus.getInstance().setApplicationRunning(true);
+
         if (!TrainingData.getInstance().getTrainingElements().isEmpty()) {
             TrainingElement trainingElement = TrainingData.getInstance().getTrainingElements().get(0);
             Log.l("NeuralNetworkLog:: Creating neural network. Inputs size: " + trainingElement.getImage().getHeight()  + "x" + trainingElement.getImage().getWidth());
@@ -30,10 +34,21 @@ public class Main {
 
             double error = 1.0;
             int iteration = 0;
-            while (error > 0.1) {
-                error = neuralNetwork.train();
-                TrainedData.getInstance().getArrayOfTrainedElements().add(new TrainedElement(error, -1));
-                iteration++;
+
+            while (ApplicationStatus.getInstance().isApplicationRunning()) {
+                if (error > 0.1 && ApplicationStatus.getInstance().getStatus() == ApplicationStatus.Status.TRAINING) {
+                    error = neuralNetwork.train();
+                    TrainedData.getInstance().getArrayOfTrainedElements().add(new TrainedElement(error, -1));
+                    iteration++;
+                } else {
+                    testNeuralNetwork(neuralNetwork);
+
+                    try {
+                        Thread.sleep(1000 / Parameters.getInstance().getFramesPerSecond());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
 
                 //Compute the time elapsed since the last frame
                 currentTime = System.currentTimeMillis();
@@ -42,11 +57,12 @@ public class Main {
                 dunModrGraphics.updateFrame(timeElapsed);
                 lastUpdateTime = currentTime;
             }
+
             Log.l("NeuralNetworkLog:: Number of training iterations: " + iteration);
             Log.l("NeuralNetworkLog:: Elapsed time: " + (System.currentTimeMillis() - startTime) + " ms");
-
-            testNeuralNetwork(neuralNetwork);
         }
+
+        System.exit(0);
     }
 
     private static void testNeuralNetwork(NeuralNetwork neuralNetwork) {

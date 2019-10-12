@@ -1,7 +1,9 @@
+package main;
+
 import java.awt.image.BufferedImage;
 
 /**
- * Utils class. Only "static" methods.
+ * main.Utils class. Only "static" methods.
  */
 public class Utils {
     public static float getAverage(float[] array) {

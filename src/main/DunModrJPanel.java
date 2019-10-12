@@ -1,3 +1,8 @@
+package main;
+
+import listeners.MyKeyListener;
+import listeners.MyMouseListener;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -34,8 +39,20 @@ public class DunModrJPanel extends JPanel {
             g.drawLine(x1, y1, x2, y2);
         }
 
-        g.drawString("Error: " + trainedElements.get(numberOfTrainedElements - 1).getError(), 10, 20);
+        if (numberOfTrainedElements > 1) {
+            g.drawString("Error: " + trainedElements.get(numberOfTrainedElements - 1).getError(), 10, 20);
+        }
         g.drawString("Iterations: " + numberOfTrainedElements, 10, 35);
         g.drawString("FPS: " + fps, 10, 50);
+    }
+
+    public void addMyKeyListener() {
+        addKeyListener(MyKeyListener.getInstance());
+        setFocusable(true);
+    }
+
+    public void addMyMouseListener() {
+        addMouseListener(MyMouseListener.getInstance());
+        setFocusable(true);
     }
 }

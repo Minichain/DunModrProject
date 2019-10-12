@@ -1,3 +1,5 @@
+package main;
+
 public class Log {
 
     public static void l(String log) {

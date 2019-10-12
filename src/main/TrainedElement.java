@@ -1,3 +1,5 @@
+package main;
+
 public class TrainedElement {
     private double error;
     private double accuracy;

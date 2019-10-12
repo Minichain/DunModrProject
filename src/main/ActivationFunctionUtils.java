@@ -1,3 +1,5 @@
+package main;
+
 public class ActivationFunctionUtils {
     enum ActivationFunction {
         SIGMOID, TANH, RELU, LEAKYRELU

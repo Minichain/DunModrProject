@@ -1,9 +1,9 @@
+package main;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.util.ArrayList;
 
 public class DunModrGraphics {
     private DunModrJPanel dunModrJPanel;
@@ -12,7 +12,7 @@ public class DunModrGraphics {
     public void createJFrame() {
         //create JFrame Instance
         frame = new JFrame();
-        frame.setTitle("DunModrJPanel");
+        frame.setTitle("main.DunModrJPanel");
         frame.setLayout(new BorderLayout());
 
         frame.setSize(new Dimension(Parameters.getInstance().getWindowWidth(), Parameters.getInstance().getWindowHeight()));
@@ -25,6 +25,8 @@ public class DunModrGraphics {
     public void createJPanel() {
         dunModrJPanel = new DunModrJPanel(Parameters.getInstance().getWindowWidth(), Parameters.getInstance().getWindowHeight());
         dunModrJPanel.setVisible(true);
+        dunModrJPanel.addMyKeyListener();
+        dunModrJPanel.addMyMouseListener();
 
         frame.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent componentEvent) {
@@ -38,6 +40,7 @@ public class DunModrGraphics {
     }
 
     public void addJPanelToJFrame() {
+        frame.add(dunModrJPanel);
         frame.add(dunModrJPanel);
     }
 
